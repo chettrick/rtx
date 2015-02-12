@@ -25,7 +25,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS RTX
-   &#160;<span id="projectnumber">Version 4.74</span>
+   &#160;<span id="projectnumber">Version 4.75</span>
    </div>
    <div id="projectbrief">CMSIS-RTOS RTX: Real-Time Operating System for Cortex-M processor-based devices</div>
   </td>
@@ -69,7 +69,7 @@ $(document).ready(function(){initNavTree('_r_t_x__conf__c_m.html','');});
 <div class="contents">
 <div class="textblock"><p>The file RTX_Conf_CM.c is used to define the configuration parameters of CMSIS-RTOS RTX. This file should be part of every project that is using the CMSIS-RTOS RTX kernel.</p>
 <div class="fragment"><div class="line"><span class="comment">/*----------------------------------------------------------------------------</span></div>
-<div class="line"><span class="comment"> *      RL-ARM - RTX</span></div>
+<div class="line"><span class="comment"> *      CMSIS-RTOS  -  RTX</span></div>
 <div class="line"><span class="comment"> *----------------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment"> *      Name:    RTX_Conf_CM.C</span></div>
 <div class="line"><span class="comment"> *      Purpose: Configuration of CMSIS RTX Kernel for Cortex-M</span></div>
@@ -125,14 +125,14 @@ $(document).ready(function(){initNavTree('_r_t_x__conf__c_m.html','');});
 <div class="line"><span class="comment">//   &lt;i&gt; Defines default stack size for threads with osThreadDef stacksz = 0</span></div>
 <div class="line"><span class="comment">//   &lt;i&gt; Default: 200</span></div>
 <div class="line"><span class="preprocessor">#ifndef OS_STKSIZE</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor"> #define OS_STKSIZE     50</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor"> #define OS_STKSIZE     50     // this stack size value is in words</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span> </div>
 <div class="line"><span class="comment">//   &lt;o&gt;Main Thread stack size [bytes] &lt;64-32768:8&gt;&lt;#/4&gt;</span></div>
 <div class="line"><span class="comment">//   &lt;i&gt; Defines stack size for main thread.</span></div>
 <div class="line"><span class="comment">//   &lt;i&gt; Default: 200</span></div>
 <div class="line"><span class="preprocessor">#ifndef OS_MAINSTKSIZE</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor"> #define OS_MAINSTKSIZE 50</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor"> #define OS_MAINSTKSIZE 50     // this stack size value is in words</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span> </div>
 <div class="line"><span class="comment">//   &lt;o&gt;Number of threads with user-provided stack size &lt;0-250&gt;</span></div>
@@ -146,7 +146,7 @@ $(document).ready(function(){initNavTree('_r_t_x__conf__c_m.html','');});
 <div class="line"><span class="comment">//   &lt;i&gt; Defines the combined stack size for threads with user-provided stack size.</span></div>
 <div class="line"><span class="comment">//   &lt;i&gt; Default: 0</span></div>
 <div class="line"><span class="preprocessor">#ifndef OS_PRIVSTKSIZE</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor"> #define OS_PRIVSTKSIZE 0</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor"> #define OS_PRIVSTKSIZE 0     // this stack size value is in words</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span> </div>
 <div class="line"><span class="comment">//   &lt;q&gt;Check for stack overflow</span></div>
@@ -235,7 +235,7 @@ $(document).ready(function(){initNavTree('_r_t_x__conf__c_m.html','');});
 <div class="line"><span class="comment">//   &lt;i&gt; Defines stack size for Timer thread.</span></div>
 <div class="line"><span class="comment">//   &lt;i&gt; Default: 200</span></div>
 <div class="line"><span class="preprocessor">#ifndef OS_TIMERSTKSZ</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor"> #define OS_TIMERSTKSZ  50</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor"> #define OS_TIMERSTKSZ  50     // this stack size value is in words</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span> </div>
 <div class="line"><span class="comment">//   &lt;o&gt;Timer Callback Queue size &lt;1-32&gt;</span></div>
@@ -376,7 +376,7 @@ $(document).ready(function(){initNavTree('_r_t_x__conf__c_m.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="_configure.html">Configuration of CMSIS-RTOS RTX</a></li>
-    <li class="footer">Generated on Thu Jun 12 2014 15:53:45 for CMSIS-RTOS RTX by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Sep 24 2014 12:17:11 for CMSIS-RTOS RTX by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.2 

@@ -1,9 +1,9 @@
 /*----------------------------------------------------------------------------
- *      RL-ARM - RTX
+ *      CMSIS-RTOS  -  RTX
  *----------------------------------------------------------------------------
  *      Name:    rt_CMSIS.c
  *      Purpose: CMSIS RTOS API
- *      Rev.:    V4.74
+ *      Rev.:    V4.75
  *----------------------------------------------------------------------------
  *
  * Copyright (c) 1999-2009 KEIL, 2009-2013 ARM Germany GmbH
@@ -81,12 +81,6 @@
 
 #define __NO_RETURN __declspec(noreturn)
 
-#define osEvent_type       osEvent
-#define osEvent_ret_status ret
-#define osEvent_ret_value  ret
-#define osEvent_ret_msg    ret
-#define osEvent_ret_mail   ret
-
 #define osCallback_type    osCallback
 #define osCallback_ret     ret
 
@@ -146,9 +140,6 @@ static __inline   t __##f (t1 a1, t2 a2, t3 a3, t4 a4) {                       \
 
 #define __NO_RETURN __attribute__((noreturn))
 
-typedef uint32_t __attribute__((vector_size(8)))  ret64;
-typedef uint32_t __attribute__((vector_size(16))) ret128;
-
 #define RET_pointer    __r0
 #define RET_int32_t    __r0
 #define RET_uint32_t   __r0
@@ -157,14 +148,8 @@ typedef uint32_t __attribute__((vector_size(16))) ret128;
 #define RET_osEvent    {(osStatus)__r0, {(uint32_t)__r1}, {(void *)__r2}}
 #define RET_osCallback {(void *)__r0, (void *)__r1}
 
-#define osEvent_type        ret128
-#define osEvent_ret_status (ret128){ret.status}
-#define osEvent_ret_value  (ret128){ret.status, ret.value.v}
-#define osEvent_ret_msg    (ret128){ret.status, ret.value.v, (uint32_t)ret.def.message_id}
-#define osEvent_ret_mail   (ret128){ret.status, ret.value.v, (uint32_t)ret.def.mail_id}
-
-#define osCallback_type     ret64
-#define osCallback_ret     (ret64) {(uint32_t)ret.fp, (uint32_t)ret.arg}
+#define osCallback_type    uint64_t
+#define osCallback_ret     ((uint64_t)(uint32_t)ret.fp | ((uint64_t)((uint32_t)ret.arg)) << 32)
 
 #define SVC_ArgN(n) \
   register int __r##n __asm("r"#n);
@@ -273,8 +258,49 @@ static inline  t __##f (t1 a1, t2 a2, t3 a3, t4 a4) {                          \
 }
 
 #define SVC_1_2 SVC_1_1 
-#define SVC_1_3 SVC_1_1 
-#define SVC_2_3 SVC_2_1 
+
+#define SVC_1_3(f,t,t1,rv)                                                     \
+t    f    (t1 a1);                                                             \
+__attribute__((naked))                                                         \
+void f##_ (t1 a1) {                                                            \
+  __asm volatile                                                               \
+  (                                                                            \
+    "push {lr}\n"                                                              \
+    "sub  sp,#12\n"                                                            \
+    "mov  r1,r0\n"                                                             \
+    "mov  r0,sp\n"                                                             \
+    "bl   "#f"\n"                                                              \
+    "pop  {r0-r2,pc}\n"                                                        \
+  );                                                                           \
+}                                                                              \
+__attribute__((always_inline))                                                 \
+static inline  t __##f (t1 a1) {                                               \
+  SVC_Arg1(t1);                                                                \
+  SVC_Call(f##_);                                                              \
+  return (t) rv;                                                               \
+}
+
+#define SVC_2_3(f,t,t1,t2,rv)                                                  \
+t    f    (t1 a1, t2 a2);                                                      \
+__attribute__((naked))                                                         \
+void f##_ (t1 a1, t2 a2) {                                                     \
+  __asm volatile                                                               \
+  (                                                                            \
+    "push {lr}\n"                                                              \
+    "sub  sp,#12\n"                                                            \
+    "mov  r2,r1\n"                                                             \
+    "mov  r1,r0\n"                                                             \
+    "mov  r0,sp\n"                                                             \
+    "bl   "#f"\n"                                                              \
+    "pop  {r0-r2,pc}\n"                                                        \
+  );                                                                           \
+}                                                                              \
+__attribute__((always_inline))                                                 \
+static inline  t __##f (t1 a1, t2 a2) {                                        \
+  SVC_Arg2(t1,t2);                                                             \
+  SVC_Call(f##_);                                                              \
+  return (t) rv;                                                               \
+}
 
 #elif defined (__ICCARM__)      /* IAR Compiler */
 
@@ -282,12 +308,6 @@ static inline  t __##f (t1 a1, t2 a2, t3 a3, t4 a4) {                          \
 
 #define RET_osEvent        "=r"(ret.status), "=r"(ret.value), "=r"(ret.def)
 #define RET_osCallback     "=r"(ret.fp), "=r"(ret.arg)
-
-#define osEvent_type       osEvent
-#define osEvent_ret_status ret
-#define osEvent_ret_value  ret
-#define osEvent_ret_msg    ret
-#define osEvent_ret_mail   ret
 
 #define osCallback_type    uint64_t
 #define osCallback_ret     ((uint64_t)ret.fp | ((uint64_t)ret.arg)<<32)
@@ -833,19 +853,19 @@ osStatus svcDelay (uint32_t millisec) {
 
 /// Wait for Signal, Message, Mail, or Timeout
 #if osFeature_Wait != 0
-os_InRegs osEvent_type svcWait (uint32_t millisec) {
+os_InRegs osEvent svcWait (uint32_t millisec) {
   osEvent ret;
 
   if (millisec == 0) {
     ret.status = osOK;
-    return osEvent_ret_status;
+    return ret;
   }
 
   /* To Do: osEventSignal, osEventMessage, osEventMail */
   rt_dly_wait(rt_ms2tick(millisec));
   ret.status = osEventTimeout;
 
-  return osEvent_ret_status;
+  return ret;
 }
 #endif
 
@@ -1233,13 +1253,13 @@ int32_t svcSignalClear (osThreadId thread_id, int32_t signals) {
 }
 
 /// Wait for one or more Signal Flags to become signaled for the current RUNNING thread
-os_InRegs osEvent_type svcSignalWait (int32_t signals, uint32_t millisec) {
+os_InRegs osEvent svcSignalWait (int32_t signals, uint32_t millisec) {
   OS_RESULT res;
   osEvent   ret;
 
   if (signals & (0xFFFFFFFF << osFeature_Signals)) {
     ret.status = osErrorValue;
-    return osEvent_ret_status;
+    return ret;
   }
 
   if (signals != 0) {                           // Wait for all specified signals
@@ -1256,7 +1276,7 @@ os_InRegs osEvent_type svcSignalWait (int32_t signals, uint32_t millisec) {
     ret.value.signals = 0;
   }
 
-  return osEvent_ret_value;
+  return ret;
 }
 
 
@@ -1293,7 +1313,7 @@ int32_t osSignalSet (osThreadId thread_id, int32_t signals) {
 
 /// Clear the specified Signal Flags of an active thread
 int32_t osSignalClear (osThreadId thread_id, int32_t signals) {
-  if (__get_IPSR() != 0) return osErrorISR;     // Not allowed in ISR
+  if (__get_IPSR() != 0) return 0x80000000;     // Not allowed in ISR
   return __svcSignalClear(thread_id, signals);
 }
 
@@ -1726,30 +1746,30 @@ osStatus svcMessagePut (osMessageQId queue_id, uint32_t info, uint32_t millisec)
 }
 
 /// Get a Message or Wait for a Message from a Queue
-os_InRegs osEvent_type svcMessageGet (osMessageQId queue_id, uint32_t millisec) {
+os_InRegs osEvent svcMessageGet (osMessageQId queue_id, uint32_t millisec) {
   OS_RESULT res;
   osEvent   ret;
 
   if (queue_id == NULL) {
     ret.status = osErrorParameter;
-    return osEvent_ret_status;
+    return ret;
   }
 
   if (((P_MCB)queue_id)->cb_type != MCB) {
     ret.status = osErrorParameter;
-    return osEvent_ret_status;
+    return ret;
   }
 
   res = rt_mbx_wait(queue_id, &ret.value.p, rt_ms2tick(millisec));
   
   if (res == OS_R_TMO) {
     ret.status = millisec ? osEventTimeout : osOK;
-    return osEvent_ret_value;
+    return ret;
   }
 
   ret.status = osEventMessage;
 
-  return osEvent_ret_value;
+  return ret;
 }
 
 

@@ -1,9 +1,9 @@
 /*----------------------------------------------------------------------------
- *      RL-ARM - RTX
+ *      CMSIS-RTOS  -  RTX
  *----------------------------------------------------------------------------
  *      Name:    RT_TASK.C
  *      Purpose: Task functions and system start up.
- *      Rev.:    V4.73
+ *      Rev.:    V4.75
  *----------------------------------------------------------------------------
  *
  * Copyright (c) 1999-2009 KEIL, 2009-2013 ARM Germany GmbH
@@ -397,10 +397,10 @@ void rt_sys_init (FUNCP first_task, U32 prio_stksz, void *stk) {
 
   rt_init_robin ();
 
+#ifndef __CMSIS_RTOS
   /* Intitialize SVC and PendSV */
   rt_svc_init ();
 
-#ifndef __CMSIS_RTOS
   /* Intitialize and start system clock timer */
   os_tick_irqn = os_tick_init ();
   if (os_tick_irqn >= 0) {
@@ -418,6 +418,9 @@ void rt_sys_init (FUNCP first_task, U32 prio_stksz, void *stk) {
 #ifdef __CMSIS_RTOS
 void rt_sys_start (void) {
   /* Start system */
+
+  /* Intitialize SVC and PendSV */
+  rt_svc_init ();
 
   /* Intitialize and start system clock timer */
   os_tick_irqn = os_tick_init ();

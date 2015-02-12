@@ -74,9 +74,9 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy ArInp.Scr CM0_LE\BuildLib.scr</UserProg1Name>
-            <UserProg2Name>cmd.exe /C copy CM0_LE\RTX_CM0.lib ..\..\LIB\ARM</UserProg2Name>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name>cmd.exe /C copy CM0_LE\RTX_CM0.lib ..\..\LIB\ARM</UserProg1Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </AfterMake>
@@ -719,9 +719,9 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy ArInp.Scr CM0_BE\BuildLib.scr</UserProg1Name>
-            <UserProg2Name>cmd.exe /C copy CM0_BE\RTX_CM0_B.lib ..\..\LIB\ARM</UserProg2Name>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name>cmd.exe /C copy CM0_BE\RTX_CM0_B.lib ..\..\LIB\ARM</UserProg1Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </AfterMake>
@@ -1364,9 +1364,9 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy ArInp.Scr CM3_LE\BuildLib.scr</UserProg1Name>
-            <UserProg2Name>cmd.exe /C copy CM3_LE\RTX_CM3.lib ..\..\LIB\ARM</UserProg2Name>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name>cmd.exe /C copy CM3_LE\RTX_CM3.lib ..\..\LIB\ARM</UserProg1Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </AfterMake>
@@ -2009,9 +2009,9 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy ArInp.Scr CM3_BE\BuildLib.scr</UserProg1Name>
-            <UserProg2Name>cmd.exe /C copy CM3_BE\RTX_CM3_B.lib ..\..\LIB\ARM</UserProg2Name>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name>cmd.exe /C copy CM3_BE\RTX_CM3_B.lib ..\..\LIB\ARM</UserProg1Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </AfterMake>
@@ -2654,9 +2654,9 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy ArInp.Scr CM3_LE_IFX\BuildLib.scr</UserProg1Name>
-            <UserProg2Name>cmd.exe /C copy CM3_LE_IFX\RTX_CM3_IFX.lib ..\..\LIB\ARM</UserProg2Name>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name>cmd.exe /C copy CM3_LE_IFX\RTX_CM3_IFX.lib ..\..\LIB\ARM</UserProg1Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </AfterMake>
@@ -3299,9 +3299,9 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy ArInp.Scr CM3X_LE\BuildLib.scr</UserProg1Name>
-            <UserProg2Name>cmd.exe /C copy CM3X_LE\RTX_CM3X.lib ..\..\LIB\ARM</UserProg2Name>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name>cmd.exe /C copy CM3X_LE\RTX_CM3X.lib ..\..\LIB\ARM</UserProg1Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </AfterMake>
@@ -3944,9 +3944,9 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy ArInp.Scr CM4F_LE\BuildLib.scr</UserProg1Name>
-            <UserProg2Name>cmd.exe /C copy CM4F_LE\RTX_CM4.lib ..\..\LIB\ARM</UserProg2Name>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name>cmd.exe /C copy CM4F_LE\RTX_CM4.lib ..\..\LIB\ARM</UserProg1Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </AfterMake>
@@ -4589,9 +4589,9 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy ArInp.Scr CM4F_BE\BuildLib.scr</UserProg1Name>
-            <UserProg2Name>cmd.exe /C copy CM4F_BE\RTX_CM4_B.lib ..\..\LIB\ARM</UserProg2Name>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name>cmd.exe /C copy CM4F_BE\RTX_CM4_B.lib ..\..\LIB\ARM</UserProg1Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </AfterMake>
@@ -5234,9 +5234,9 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy ArInp.Scr CM4F_LE_IFX\BuildLib.scr</UserProg1Name>
-            <UserProg2Name>cmd.exe /C copy CM4F_LE_IFX\RTX_CM4_IFX.lib ..\..\LIB\ARM</UserProg2Name>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name>cmd.exe /C copy CM4F_LE_IFX\RTX_CM4_IFX.lib ..\..\LIB\ARM</UserProg1Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </AfterMake>

@@ -4,6 +4,7 @@ var NAVTREE =
     [ "Overview", "_overview.html", "_overview" ],
     [ "Configuration of CMSIS-RTOS RTX", "_configure.html", "_configure" ],
     [ "Using CMSIS-RTOS RTX", "_using.html", null ],
+    [ "Building CMSIS-RTOS RTX Library", "_creating__r_t_x__l_i_b.html", null ],
     [ "Function Overview", "_function_overview.html", null ],
     [ "Header File Template: cmsis_os.h", "cmsis_os_h.html", null ],
     [ "Reference", "modules.html", "modules" ],

@@ -1,9 +1,9 @@
 /*----------------------------------------------------------------------------
- *      RL-ARM - RTX
+ *      CMSIS-RTOS  -  RTX
  *----------------------------------------------------------------------------
  *      Name:    RTX_CM_LIB.H
  *      Purpose: RTX Kernel System Configuration
- *      Rev.:    V4.74
+ *      Rev.:    V4.75
  *----------------------------------------------------------------------------
  *
  * Copyright (c) 1999-2009 KEIL, 2009-2013 ARM Germany GmbH
@@ -65,6 +65,7 @@ typedef uint32_t OS_RESULT;
 #define mutex_wait(m)   os_mut_wait(m,0xFFFF)
 #define mutex_rel(m)    os_mut_release(m)
 
+extern uint8_t   os_running;
 extern OS_TID    rt_tsk_self    (void);
 extern void      rt_mut_init    (OS_ID mutex);
 extern OS_RESULT rt_mut_release (OS_ID mutex);
@@ -193,7 +194,7 @@ void *__user_perthread_libspace (void) {
   /* Provide a separate libspace for each task. */
   uint32_t idx;
 
-  idx = runtask_id ();
+  idx = os_running ? runtask_id () : 0;
   if (idx == 0) {
     /* RTX not running yet. */
     return (&__libspace_start);
@@ -220,7 +221,7 @@ int _mutex_initialize (OS_ID *mutex) {
 
 __attribute__((used)) void _mutex_acquire (OS_ID *mutex) {
   /* Acquire a system mutex, lock stdlib resources. */
-  if (runtask_id ()) {
+  if (os_running) {
     /* RTX running, acquire a mutex. */
     mutex_wait (*mutex);
   }
@@ -231,7 +232,7 @@ __attribute__((used)) void _mutex_acquire (OS_ID *mutex) {
 
 __attribute__((used)) void _mutex_release (OS_ID *mutex) {
   /* Release a system mutex, unlock stdlib resources. */
-  if (runtask_id ()) {
+  if (os_running) {
     /* RTX running, release a mutex. */
     mutex_rel (*mutex);
   }

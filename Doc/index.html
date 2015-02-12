@@ -25,7 +25,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS RTX
-   &#160;<span id="projectnumber">Version 4.74</span>
+   &#160;<span id="projectnumber">Version 4.75</span>
    </div>
    <div id="projectbrief">CMSIS-RTOS RTX: Real-Time Operating System for Cortex-M processor-based devices</div>
   </td>
@@ -83,6 +83,12 @@ $(document).ready(function(){initNavTree('index.html','');});
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
+<td>V4.75 </td><td>Corrected: Service calls for Cortex-M4 with Floating Point for GCC.<br/>
+ Corrected: <a class="el" href="group___c_m_s_i_s___r_t_o_s___signal_mgmt.html#ga87283a6ebc31ce9ed42baf3ea7e4eab6">osSignalClear</a> returns 0x80000000 when called from interrupt service routines.<br/>
+ Corrected: C standard library memory functions (malloc, free, ...) can be called between calls to <a class="el" href="group___c_m_s_i_s___r_t_o_s___kernel_ctrl.html#ga53d078a801022e202e8115c083ece68e">osKernelInitialize</a> and <a class="el" href="group___c_m_s_i_s___r_t_o_s___kernel_ctrl.html#gaab668ffd2ea76bb0a77ab0ab385eaef2">osKernelStart</a>.<br/>
+ Corrected: Interrupt Priority Group can be configured between calls to <a class="el" href="group___c_m_s_i_s___r_t_o_s___kernel_ctrl.html#ga53d078a801022e202e8115c083ece68e">osKernelInitialize</a> and <a class="el" href="group___c_m_s_i_s___r_t_o_s___kernel_ctrl.html#gaab668ffd2ea76bb0a77ab0ab385eaef2">osKernelStart</a>.<br/>
+   </td></tr>
+<tr>
 <td>V4.74 </td><td>Corrected: <a class="el" href="group___c_m_s_i_s___r_t_o_s___kernel_ctrl.html#ga53d078a801022e202e8115c083ece68e">osKernelInitialize</a> and <a class="el" href="group___c_m_s_i_s___r_t_o_s___kernel_ctrl.html#gaab668ffd2ea76bb0a77ab0ab385eaef2">osKernelStart</a> when called from main which is already a thread.<br/>
    </td></tr>
 <tr>
@@ -117,7 +123,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jun 12 2014 15:53:45 for CMSIS-RTOS RTX by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Sep 24 2014 12:17:11 for CMSIS-RTOS RTX by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.2 

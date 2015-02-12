@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------
- *      RL-ARM - RTX
+ *      CMSIS-RTOS  -  RTX
  *----------------------------------------------------------------------------
  *      Name:    RT_TIMER.C
  *      Purpose: User timer functions
@@ -36,6 +36,8 @@
 #include "RTX_Config.h"
 #include "rt_Timer.h"
 #include "rt_MemBox.h"
+
+#ifndef __CMSIS_RTOS
 
 
 /*----------------------------------------------------------------------------
@@ -123,6 +125,9 @@ OS_ID rt_tmr_kill (OS_ID timer)  {
   /* Timer killed */
   return (NULL);
 }
+
+
+#endif
 
 /*----------------------------------------------------------------------------
  * end of file
