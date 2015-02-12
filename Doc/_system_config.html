@@ -25,7 +25,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS RTX
-   &#160;<span id="projectnumber">Version 4.73</span>
+   &#160;<span id="projectnumber">Version 4.74</span>
    </div>
    <div id="projectbrief">CMSIS-RTOS RTX: Real-Time Operating System for Cortex-M processor-based devices</div>
   </td>
@@ -70,14 +70,14 @@ $(document).ready(function(){initNavTree('_system_config.html','');});
 <div class="textblock"><p>The CMSIS-RTOS RTX provides system-wide settings for:</p>
 <ul>
 <li><a class="el" href="_system_config.html#RoundRobin">Settings for Round-Robin Thread Switching</a></li>
-<li><a class="el" href="_system_config.html#UserTimer">Settings for CMSIS-RTOS Timer Management</a></li>
+<li><a class="el" href="_system_config.html#UserTimer">Settings for CMSIS-RTOS User Timer Management</a></li>
 </ul>
 <h1><a class="anchor" id="RoundRobin"></a>
 Settings for Round-Robin Thread Switching</h1>
 <p>CMSIS-RTOS RTX may be configured to use Round-Robin Multitasking thread switching. Round-Robin allows quasi-parallel execution of several threads. Threads are not really executed concurrently but are time-sliced where the available CPU time is divided into time slices and CMSIS-RTOS RTX assigns a time slice to each thread. Because the time slice is typically short (only a few milliseconds) it appears as though threads execute simultaneously.</p>
 <p>Threads execute for the duration of their time-slice (unless the thread's time slice is given up). Then, CMSIS-RTOS RTX switches to the next thread that is ready to run and has the same priority. If no other task with the same priority is ready to run, the current running task resumes it execution.</p>
 <p>Round-Robin Multitasking is controlled with the <b>#define OS_ROBIN</b>. The time-slice period is configured (in RTX Timer Ticks) with the <b>#define OS_ROBINTOUT</b>.</p>
-<p><b>Example:</b></p>
+<p><b>Code Example:</b></p>
 <p>The following example shows a simple CMSIS-RTOS RTX program that uses Round-Robin Multitasking. The two threads in this program are counter loops. RTX starts executing job 1, which is the function named job1. This function creates another task called job2. After job1 executes for its time slice, RTX switches to job2. After job2 executes for its time slice, RTX switches back to job1. This process repeats indefinitely.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os_8h.html">cmsis_os.h</a>&quot;</span>                      <span class="comment">// CMSIS-RTOS header file</span></div>
 <div class="line"> </div>
@@ -107,13 +107,13 @@ Settings for Round-Robin Thread Switching</h1>
 <div class="line">}</div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Rather than waiting for a thread time slice to expire, use CMSIS-RTOS functions to signal to the RTX kernel that it can switch to another task. The function <a class="el" href="group___c_m_s_i_s___r_t_o_s___thread_mgmt.html#gaf13a667493c5d629a90c13e113b99233">osThreadYield</a> passes control to other threads without Round-Robin Multitasking.</dd></dl>
 <h1><a class="anchor" id="UserTimer"></a>
-Settings for CMSIS-RTOS Timer Management</h1>
+Settings for CMSIS-RTOS User Timer Management</h1>
 <p>CMSIS-RTOS RTX supports <a class="el" href="group___c_m_s_i_s___r_t_o_s___timer_mgmt.html">Timer Management</a> which provides timer callback functions. The <a class="el" href="group___c_m_s_i_s___r_t_o_s___timer_mgmt.html">Timer Management</a> is configured with the following <em>#defines:</em> </p>
 <ul>
 <li><b>#define OS_TIMERS 1</b> enables the <a class="el" href="group___c_m_s_i_s___r_t_o_s___timer_mgmt.html">Timer Management</a>. When disable the <b>osTimerThread</b> is not created.</li>
 <li><b>#define OS_TIMERPRIO</b> specifies the priority of the osTimerThread that executes the timer callback functions.</li>
 <li><b>#define OS_TIMERSTKSZ</b> specifies the stack size (in words) for the the <b>osTimerThread</b>.</li>
-<li><b>#define OS_TIMERCBQS</b> specifies the number of timer callback functions that are concurrently created with <a class="el" href="group___c_m_s_i_s___r_t_o_s___timer_mgmt.html#gaedd312bfdca04e0b8162b666e09a1ae6">osTimerCreate</a>.</li>
+<li><b>#define OS_TIMERCBQS</b> specifies the maximum number of concurrent timer callbacks.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>Refer to <a class="el" href="_theory.html#RTX_Threads">CMSIS-RTOS RTX Threads</a> for more information about the <b>osTimerThread</b>. </dd></dl>
 </div></div><!-- contents -->
@@ -122,7 +122,7 @@ Settings for CMSIS-RTOS Timer Management</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="_configure.html">Configuration of CMSIS-RTOS RTX</a></li>
-    <li class="footer">Generated on Thu Feb 20 2014 15:16:35 for CMSIS-RTOS RTX by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Jun 12 2014 15:53:45 for CMSIS-RTOS RTX by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.2 

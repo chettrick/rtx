@@ -3,7 +3,7 @@
  *----------------------------------------------------------------------------
  *      Name:    RTX_CM_LIB.H
  *      Purpose: RTX Kernel System Configuration
- *      Rev.:    V4.73
+ *      Rev.:    V4.74
  *----------------------------------------------------------------------------
  *
  * Copyright (c) 1999-2009 KEIL, 2009-2013 ARM Germany GmbH
@@ -82,6 +82,14 @@ OS_RESULT _os_mut_wait    (uint32_t p, OS_ID mutex, uint16_t timeout) __svc_indi
 /*----------------------------------------------------------------------------
  *      Global Variables
  *---------------------------------------------------------------------------*/
+
+#if (OS_TASKCNT == 0)
+#error "Invalid number of concurrent running threads!"
+#endif
+
+#if (OS_PRIVCNT >= OS_TASKCNT)
+#error "Too many threads with user-provided stack size!"
+#endif
 
 #if (OS_TIMERS != 0)
 #define OS_TASK_CNT (OS_TASKCNT + 1)

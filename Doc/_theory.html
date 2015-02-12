@@ -25,7 +25,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS RTX
-   &#160;<span id="projectnumber">Version 4.73</span>
+   &#160;<span id="projectnumber">Version 4.74</span>
    </div>
    <div id="projectbrief">CMSIS-RTOS RTX: Real-Time Operating System for Cortex-M processor-based devices</div>
   </td>
@@ -70,7 +70,7 @@ $(document).ready(function(){initNavTree('_theory.html','');});
 <div class="textblock"><p>This section describes how CMSIS-RTOS RTX manages the resources of the target system. Many aspects of the CMSIS-RTOS RTX kernel can be configured. Information about configuration options is mentioned where applicable.</p>
 <h1><a class="anchor" id="KernelTimer"></a>
 RTX Kernel Timer Tick and Thread Management</h1>
-<p>The CMSIS-RTOS RTX uses, by default, the Cortex-M SysTick timer to generate periodic interrupts for the RTX kernel timer tick. CMSIS-RTOS provides <a class="el" href="group___c_m_s_i_s___r_t_o_s___timer_mgmt.html">Timer Management</a> functions and several CMSIS-RTOS functions have a timeout parameter. This periodic RTX kernel timer tick interrupt is used to derive the required time interval. CMSIS-RTOS RTX also provides configuration options for a alternative timer and tick-less operation. Refer to <a class="el" href="_timer_tick.html">Tick Timer Configuration</a> for more information.</p>
+<p>The CMSIS-RTOS RTX uses, by default, the Cortex-M SysTick timer to generate periodic interrupts for the RTX kernel timer tick. CMSIS-RTOS provides <a class="el" href="group___c_m_s_i_s___r_t_o_s___timer_mgmt.html">Timer Management</a> functions and several CMSIS-RTOS functions have a timeout parameter. This periodic RTX kernel timer tick interrupt is used to derive the required time interval. CMSIS-RTOS RTX also provides configuration options for a alternative timer and tick-less operation. Refer to <a class="el" href="_timer_tick.html">RTX Kernel Tick Timer Configuration</a> for more information.</p>
 <p>To handle timeout and time delays for threads, the CMSIS-RTOS RTX thread management is controlled by the RTX kernel timer tick interrupt. The thread context switch itself is implemented in the HAL_CMx.x hardware abstraction layer source files. The thread context contains all CPU registers (R0 - R12), the return address (LR), the program counter (PC), and the processor status register (xPSR). For the Cortex-M4 FPU the floating point status and registers (S0 - S32, FPSCR) are also part of the thread context.</p>
 <p>When a thread switch occurs:</p>
 <ul>
@@ -81,7 +81,7 @@ RTX Kernel Timer Tick and Thread Management</h1>
 <dl class="section note"><dt>Note</dt><dd>For Cortex-M0, Cortex-M3, and Cortex-M4 the thread context requires 64 bytes on the local stack. </dd>
 <dd>
 For Cortex-M4 FPU the thread context requires 200 bytes on the local stack. For devices with Cortex-M4 FPU the default stack space should be increased to a minimum of 300 bytes.</dd></dl>
-<p>Each thread is provided with an separate stack that holds the thread context and stack space for automatic variables and return addresses for function call nesting. The stack sizes of the RTX threads are flexible configurable as explained in the section <a class="el" href="_thread_config.html">Thread Stack and Processor Mode</a>. RTX even offers a configurable checking for stack overflows. Refer to <a class="el" href="_thread_config.html#StackCheck">Stack Overflow Checking</a> for more information.</p>
+<p>Each thread is provided with an separate stack that holds the thread context and stack space for automatic variables and return addresses for function call nesting. The stack sizes of the RTX threads are flexible configurable as explained in the section <a class="el" href="_thread_config.html">Thread Configuration</a>. RTX even offers a configurable checking for stack overflows. Refer to <a class="el" href="_thread_config.html#StackCheck">Stack Overflow Checking</a> for more information.</p>
 <h1><a class="anchor" id="RTX_Threads"></a>
 CMSIS-RTOS RTX Threads</h1>
 <p>At startup time, the CMSIS-RTOS RTX creates the following threads:</p>
@@ -92,7 +92,7 @@ CMSIS-RTOS RTX Threads</h1>
 <li><b>os_idle_demon</b> : this thread executes when no other thread is in <b>RUNNING</b> state. The code of that thread is provided in the <a class="el" href="_r_t_x__conf__c_m.html">RTX_Conf_CM.c Configuration File</a> and is typically used to put the system into a power-saving mode.</li>
 </ul>
 <ul>
-<li><b>osTimerThread</b> : this thread executes the <a class="el" href="group___c_m_s_i_s___r_t_o_s___timer_mgmt.html">Timer Management</a> callback functions. This thread can be disabled; refer to <a class="el" href="_system_config.html#UserTimer">Settings for CMSIS-RTOS Timer Management</a> for configuration options.</li>
+<li><b>osTimerThread</b> : this thread executes the <a class="el" href="group___c_m_s_i_s___r_t_o_s___timer_mgmt.html">Timer Management</a> callback functions. This thread can be disabled; refer to <a class="el" href="_system_config.html#UserTimer">Settings for CMSIS-RTOS User Timer Management</a> for configuration options.</li>
 </ul>
 <h1><a class="anchor" id="PriorityInversion"></a>
 Priority Inversion on Resource Sharing</h1>
@@ -105,7 +105,7 @@ Priority Inversion on Resource Sharing</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="_overview.html">Overview</a></li>
-    <li class="footer">Generated on Thu Feb 20 2014 15:16:35 for CMSIS-RTOS RTX by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Jun 12 2014 15:53:45 for CMSIS-RTOS RTX by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.2 

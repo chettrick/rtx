@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>CMSIS-RTOS RTX: Tick Timer Configuration</title>
+<title>CMSIS-RTOS RTX: RTX Kernel Tick Timer Configuration</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -25,7 +25,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS RTX
-   &#160;<span id="projectnumber">Version 4.73</span>
+   &#160;<span id="projectnumber">Version 4.74</span>
    </div>
    <div id="projectbrief">CMSIS-RTOS RTX: Real-Time Operating System for Cortex-M processor-based devices</div>
   </td>
@@ -64,20 +64,20 @@ $(document).ready(function(){initNavTree('_timer_tick.html','');});
 <div id="doc-content">
 <div class="header">
   <div class="headertitle">
-<div class="title">Tick Timer Configuration </div>  </div>
+<div class="title">RTX Kernel Tick Timer Configuration </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The CMSIS-RTOS RTX functions provide delays in units of milliseconds that are derived from RTX Timer Tick. It is therefore recommended to configure the RTX Timer tick to generate a 1 millisecond interval. Configuring a longer RTX Timer Tick may reduce energy consumption, but has impacts on the granularity of the timeouts.</p>
+<div class="textblock"><p>The CMSIS-RTOS RTX functions provide delays in units of milliseconds that are derived from the RTX Timer Tick. It is therefore recommended to configure the RTX Timer Tick to generate a 1 millisecond interval. Configuring a longer RTX Timer Tick may reduce energy consumption, but has impacts on the granularity of the timeouts.</p>
 <ul>
-<li><a class="el" href="_timer_tick.html#SysTick">Usage of the Cortex-M SysTick core timer as RTX kernel timer</a></li>
+<li><a class="el" href="_timer_tick.html#SysTick">Usage of the Cortex-M SysTick timer as RTX kernel timer</a></li>
 <li><a class="el" href="_timer_tick.html#AltTimer">Usage of an alternative timer as RTX kernel timer.</a></li>
 <li><a class="el" href="_timer_tick.html#LowPower">Configuration for Low-Power modes</a></li>
 </ul>
 <p>The value <b>#define OS_CLOCK</b> specifies the Cortex-M processor clock frequency in Hz. This value is used to calculate the RTX kernel timer reload value.</p>
-<p>The value <b>#define OS_TICK</b> specifies the RTX Timer Tick frequency in Hz. This value is used to calculate timeout values and to configure the Cortex-M SysTick timer. It is therefore recommended to configure the RTX Timer tick to 1000 Hz which results in a timeout granularity of 1 millisecond.</p>
+<p>The value <b>#define OS_TICK</b> specifies the RTX Timer Tick interval in microseconds (us). This value is used to calculate timeout values. When the SysTick core timer is enabled the value is also used to configure the SysTick timer. It is recommended to configure the RTX Timer tick to 1000 us which results in a timeout granularity of 1 millisecond.</p>
 <h1><a class="anchor" id="SysTick"></a>
-Usage of the Cortex-M SysTick core timer as RTX kernel timer</h1>
-<p>With <b>#define OS_SYSTICK 1</b> the Cortex-M SysTick core timer is selected as RTX kernel timer. In this case, the RTX kernel configures the SysTick timer clock source as processor clock. Therefore the value <b>OS_CLOCK</b> should be identical with the value of the CMSIS variable <b>SystemCoreClock</b>.</p>
+Usage of the Cortex-M SysTick timer as RTX kernel timer</h1>
+<p>With <b>#define OS_SYSTICK 1</b> the Cortex-M SysTick timer is selected as RTX kernel timer. In this case, the RTX kernel configures the SysTick timer clock source as processor clock. Therefore the value <b>OS_CLOCK</b> should be identical with the value of the CMSIS variable <b>SystemCoreClock</b>.</p>
 <h1><a class="anchor" id="AltTimer"></a>
 Usage of an alternative timer as RTX kernel timer.</h1>
 <p>With <b>#define OS_SYSTICK 0</b> an alternative timer is selected as RTX kernel timer.</p>
@@ -183,7 +183,7 @@ void os_idle_demon (void) {
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="_configure.html">Configuration of CMSIS-RTOS RTX</a></li>
-    <li class="footer">Generated on Thu Feb 20 2014 15:16:35 for CMSIS-RTOS RTX by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Jun 12 2014 15:53:45 for CMSIS-RTOS RTX by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.2 

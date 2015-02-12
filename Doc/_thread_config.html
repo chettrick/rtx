@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>CMSIS-RTOS RTX: Thread Stack and Processor Mode</title>
+<title>CMSIS-RTOS RTX: Thread Configuration</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -25,7 +25,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS RTX
-   &#160;<span id="projectnumber">Version 4.73</span>
+   &#160;<span id="projectnumber">Version 4.74</span>
    </div>
    <div id="projectbrief">CMSIS-RTOS RTX: Real-Time Operating System for Cortex-M processor-based devices</div>
   </td>
@@ -64,29 +64,29 @@ $(document).ready(function(){initNavTree('_thread_config.html','');});
 <div id="doc-content">
 <div class="header">
   <div class="headertitle">
-<div class="title">Thread Stack and Processor Mode </div>  </div>
+<div class="title">Thread Configuration </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>The CMSIS-RTOS RTX provides several parameters for the thread configuration.</p>
 <ul>
-<li><a class="el" href="_thread_config.html#StackConfig">Configuration of Thread Stack Space</a></li>
+<li><a class="el" href="_thread_config.html#StackConfig">Configuration of Thread count and Stack Space</a></li>
 <li><a class="el" href="_thread_config.html#StackCheck">Stack Overflow Checking</a></li>
 <li><a class="el" href="_thread_config.html#ProcessorMode">Processor Mode for Thread Execution</a></li>
 </ul>
 <h1><a class="anchor" id="StackConfig"></a>
-Configuration of Thread Stack Space</h1>
-<p>The <a class="el" href="group___c_m_s_i_s___r_t_o_s___thread_mgmt.html#gaee93d929beb350f16e5cc7fa602e229f">osThreadDef</a> defines a thread function. The parameter <em>stacksz</em> specifies thereby the stack requirements of this thread function. CMSIS-RTOS RTX defines two methods for defining the stack requirements:</p>
+Configuration of Thread count and Stack Space</h1>
+<p><a class="el" href="group___c_m_s_i_s___r_t_o_s___thread_mgmt.html#gaee93d929beb350f16e5cc7fa602e229f">osThreadDef</a> defines a thread function. The parameter <em>stacksz</em> specifies thereby the stack requirements of this thread function. CMSIS-RTOS RTX defines two methods for defining the stack requirements:</p>
 <ul>
 <li>when <em>stacksz</em> is 0, a fixed-size memory pool is used to for the thread stack. In this case <b>OS_STKSIZE</b> specifies the stack size for the thread function.</li>
 <li>when <em>stacksz</em> is not 0, the thread stack is allocated from a user space. The size of this user space is specified with <b>OS_PRIVSTKSIZE</b>.</li>
 </ul>
-<p>The following <em>#defines</em> specify the stack for thread execution:</p>
+<p>The following <code>#defines</code> specify the thread count and stack for thread execution:</p>
 <ul>
-<li><b>#define OS_TASKCNT</b> indicates the number of threads that allocate the stack from the fixed size memory pool when <a class="el" href="group___c_m_s_i_s___r_t_o_s___thread_mgmt.html#gaee93d929beb350f16e5cc7fa602e229f">osThreadDef</a> <em>stacksz</em> = 0.</li>
+<li><b>#define OS_TASKCNT</b> indicates the maximum number of threads that will run at the same time (including main).</li>
 <li><b>#define OS_STKSIZE</b> specifies the default stack size (in words) for threads that are defined with osThreadDef <em>stacksz</em> = 0.</li>
 <li><b>#define OS_MAINSTKSIZE</b> is the stack requirement (in words) for the main function that is started by default as an RTOS thread.</li>
-<li><b>#define OS_PRIVCNT</b> indicates the number of threads that are defined with <a class="el" href="group___c_m_s_i_s___r_t_o_s___thread_mgmt.html#gaee93d929beb350f16e5cc7fa602e229f">osThreadDef</a> <em>stacksz</em> != 0. <em>stacksz</em> specifies the stack size requirement of that thread.</li>
-<li><b>#define OS_PRIVSTKSIZE</b> is the combined stack requirement (in words) of all threads that are defined with with <a class="el" href="group___c_m_s_i_s___r_t_o_s___thread_mgmt.html#gaee93d929beb350f16e5cc7fa602e229f">osThreadDef</a> <em>stacksz</em> != 0.</li>
+<li><b>#define OS_PRIVCNT</b> indicates the number of threads that are defined with <a class="el" href="group___c_m_s_i_s___r_t_o_s___thread_mgmt.html#gaee93d929beb350f16e5cc7fa602e229f">osThreadDef</a> <em>stacksz</em> != 0 (excluding main). <em>stacksz</em> specifies the stack size requirement of that thread.</li>
+<li><b>#define OS_PRIVSTKSIZE</b> is the combined stack requirement (in words) of all threads that are defined with with <a class="el" href="group___c_m_s_i_s___r_t_o_s___thread_mgmt.html#gaee93d929beb350f16e5cc7fa602e229f">osThreadDef</a> <em>stacksz</em> != 0 (excluding main).</li>
 </ul>
 <h1><a class="anchor" id="StackCheck"></a>
 Stack Overflow Checking</h1>
@@ -109,7 +109,7 @@ Processor Mode for Thread Execution</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="_configure.html">Configuration of CMSIS-RTOS RTX</a></li>
-    <li class="footer">Generated on Thu Feb 20 2014 15:16:35 for CMSIS-RTOS RTX by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Jun 12 2014 15:53:45 for CMSIS-RTOS RTX by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.2 

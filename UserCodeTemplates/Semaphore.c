@@ -13,7 +13,7 @@ osSemaphoreId sid_Thread_Semaphore;                             // semaphore id
 osSemaphoreDef (SampleSemaphore);                               // semaphore object
 
 
-int Init_Semaphhore (void) {
+int Init_Semaphore (void) {
 
   sid_Thread_Semaphore = osSemaphoreCreate(osSemaphore(SampleSemaphore), 1);
   if (!sid_Thread_Semaphore)  {

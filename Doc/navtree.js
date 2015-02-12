@@ -1,14 +1,9 @@
 var NAVTREE =
 [
   [ "CMSIS-RTOS RTX", "index.html", [
-    [ "CMSIS-RTOS compliant Kernel", "index.html", null ],
     [ "Overview", "_overview.html", "_overview" ],
     [ "Configuration of CMSIS-RTOS RTX", "_configure.html", "_configure" ],
-    [ "Using CMSIS-RTOS RTX", "_using.html", [
-      [ "Template Project", "_using.html#Template", null ],
-      [ "Example Project .\\Examples\\RTX_ex1", "_using.html#Example1", null ],
-      [ "Example Project .\\Examples\\RTX_ex2", "_using.html#Example2", null ]
-    ] ],
+    [ "Using CMSIS-RTOS RTX", "_using.html", null ],
     [ "Function Overview", "_function_overview.html", null ],
     [ "Header File Template: cmsis_os.h", "cmsis_os_h.html", null ],
     [ "Reference", "modules.html", "modules" ],

@@ -25,7 +25,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS RTX
-   &#160;<span id="projectnumber">Version 4.73</span>
+   &#160;<span id="projectnumber">Version 4.74</span>
    </div>
    <div id="projectbrief">CMSIS-RTOS RTX: Real-Time Operating System for Cortex-M processor-based devices</div>
   </td>
@@ -74,22 +74,22 @@ $(document).ready(function(){initNavTree('_overview.html','');});
 <li>Middleware components that use the CMSIS-RTOS API are RTOS agnostic and CMSIS-RTOS compliant middleware is easier to adapt.</li>
 <li>This RTX implementation is available under the BSD license and can be freely distributed with project templates.</li>
 </ul>
-<p>The RTX CMSIS-RTOS manages the resources of the microcontroller system and implements the concept of parallel threads that run concurrently. There are many advantages of using the RTX CMSIS-RTOS kernel.</p>
-<p>Applications frequently require several concurrent activities. RTX can manage multiple concurrent activities at the time when they are needed. Each activity gets a separate thread which executes a specific task and this simplifies the overall program structure. The RTX CMSIS-RTOS system is scalable and additional threads can be added easily at a later time. Threads have a priority allowing faster execution of time-critical parts of an user application.</p>
-<p>The RTX CMSIS-RTOS offers services needed in many real-time applications, for example, periodical activation of timer functions, memory management, and message exchange between threads with time limits.</p>
+<p>The CMSIS-RTOS RTX manages the resources of the microcontroller system and implements the concept of parallel threads that run concurrently. There are many advantages of using the CMSIS-RTOS RTX kernel.</p>
+<p>Applications frequently require several concurrent activities. RTX can manage multiple concurrent activities at the time when they are needed. Each activity gets a separate thread which executes a specific task and this simplifies the overall program structure. The CMSIS-RTOS RTX system is scalable and additional threads can be added easily at a later time. Threads have a priority allowing faster execution of time-critical parts of an user application.</p>
+<p>The CMSIS-RTOS RTX offers services needed in many real-time applications, for example, periodical activation of timer functions, memory management, and message exchange between threads with time limits.</p>
 <div class="image">
 <img src="RTX_Structure.png" alt="RTX_Structure.png"/>
 <div class="caption">
 CMSIS-RTOS RTX Structure</div></div>
-<p> Compared to the classic Keil RTX version, the CMSIS-RTOS RTX library is extended with the CMSIS API interface module (source file rt_cmsis.c) which implements the function translation. The header file <a class="el" href="cmsis__os_8h.html">cmsis_os.h</a> provides the API to the RTX CMSIS-RTOS for the user application. Refer to <a class="el" href="_using.html">Using CMSIS-RTOS RTX</a> for more information.</p>
-<p>RTX CMSIS-RTOS has several options that are configured with the <a class="el" href="_r_t_x__conf__c_m.html">RTX_Conf_CM.c Configuration File</a>. Refer to <a class="el" href="_configure.html">Configuration of CMSIS-RTOS RTX</a> for more information.</p>
-<p>Attributes of the RTX CMSIS-RTOS implementation:</p>
+<p> Compared to the classic Keil RTX version, the CMSIS-RTOS RTX library is extended with the CMSIS API interface module (source file rt_cmsis.c) which implements the function translation. The header file <a class="el" href="cmsis__os_8h.html">cmsis_os.h</a> provides the API to the CMSIS-RTOS RTX for the user application. Refer to <a class="el" href="_using.html">Using CMSIS-RTOS RTX</a> for more information.</p>
+<p>CMSIS-RTOS RTX has several options that are configured with the <a class="el" href="_r_t_x__conf__c_m.html">RTX_Conf_CM.c Configuration File</a>. Refer to <a class="el" href="_configure.html">Configuration of CMSIS-RTOS RTX</a> for more information.</p>
+<p>Attributes of the CMSIS-RTOS RTX implementation:</p>
 <ul>
 <li>Provides the complete functions specified for a CMSIS-RTOS with the exception of the function <a class="el" href="_technical_data.html#osWait">osWait</a>.</li>
 <li>Interrupt Service Routines (ISR) may call most CMSIS-RTOS RTX functions.</li>
-<li>Configurations options for Thread Stack. Refer to <a class="el" href="_thread_config.html">Thread Stack and Processor Mode</a> for more information.</li>
+<li>Configurations options for Thread Stack. Refer to <a class="el" href="_thread_config.html">Thread Configuration</a> for more information.</li>
 <li>Fully deterministic context switching and deadlock avoidance. Refer to <a class="el" href="_theory.html#PriorityInversion">Priority Inversion on Resource Sharing</a> for more information.</li>
-<li>Optional Round-Robin Thread switching with configurable time-slices. Refer to <a class="el" href="_thread_config.html">Thread Stack and Processor Mode</a> for more information.</li>
+<li>Optional Round-Robin Thread switching with configurable time-slices. Refer to <a class="el" href="_thread_config.html">Thread Configuration</a> for more information.</li>
 </ul>
 <p>The following sections provide further details:</p>
 <ul>
@@ -102,7 +102,7 @@ CMSIS-RTOS RTX Structure</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 20 2014 15:16:35 for CMSIS-RTOS RTX by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Jun 12 2014 15:53:45 for CMSIS-RTOS RTX by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.2 

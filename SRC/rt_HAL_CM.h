@@ -40,7 +40,7 @@
 
 #if defined (__CC_ARM)          /* ARM Compiler */
 
-#if ((__TARGET_ARCH_7_M || __TARGET_ARCH_7E_M) && !NO_EXCLUSIVE_ACCESS)
+#if ((__TARGET_ARCH_7_M || __TARGET_ARCH_7E_M) && !defined(NO_EXCLUSIVE_ACCESS))
  #define __USE_EXCLUSIVE_ACCESS
 #else
  #undef  __USE_EXCLUSIVE_ACCESS

@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>CMSIS-RTOS RTX: CMSIS-RTOS compliant Kernel</title>
+<title>CMSIS-RTOS RTX: Main Page</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -25,7 +25,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS RTX
-   &#160;<span id="projectnumber">Version 4.73</span>
+   &#160;<span id="projectnumber">Version 4.74</span>
    </div>
    <div id="projectbrief">CMSIS-RTOS RTX: Real-Time Operating System for Cortex-M processor-based devices</div>
   </td>
@@ -64,15 +64,15 @@ $(document).ready(function(){initNavTree('index.html','');});
 <div id="doc-content">
 <div class="header">
   <div class="headertitle">
-<div class="title">CMSIS-RTOS compliant Kernel </div>  </div>
+<div class="title">CMSIS-RTOS RTX Documentation</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>This manual describes the CMSIS-RTOS implementation based on the Keil RTX Real-Time Operating System which is designed for Cortex-M processor-based devices. The RTX kernel can be used for creating applications that perform multiple tasks simultaneously. These tasks are executed by threads that operate in a quasi-parallel fashion.</p>
 <p>While it is certainly possible to create real-time applications without an RTOS (by executing one or more tasks in a loop), there are numerous scheduling, maintenance, and timing issues that can be solved better with an RTOS. For example, an RTOS enables flexible scheduling of system resources like CPU and memory, and offers methods to communicate between threads.</p>
-<p>CMSIS-RTOS RTX programs are written using standard C/C++ constructs and are compiled with the ARMCC, GCC, or IAR Compiler. The CMSIS-OS.H header file defines the RTX functions and macros that allow declaring tasks and accessing all RTOS features easily.</p>
+<p>CMSIS-RTOS RTX programs are written using standard C/C++ constructs and are compiled with the ARMCC, GCC, or IAR Compiler. The <a class="el" href="cmsis__os_8h.html">cmsis_os.h</a> header file defines the RTX functions and macros that allow declaring tasks and accessing all RTOS features easily.</p>
 <p>This manual contains the following sections:</p>
 <ul>
-<li><a class="el" href="_overview.html">Overview</a> : Provides an overview about the CMSIS-RTOS RTX and technical specifications.</li>
+<li><a class="el" href="_overview.html">Overview</a>: Provides an overview about the CMSIS-RTOS RTX and technical specifications.</li>
 <li><a class="el" href="_configure.html">Configuration of CMSIS-RTOS RTX</a> : Describes configuration parameters of CMSIS-RTOS RTX.</li>
 <li><a class="el" href="_using.html">Using CMSIS-RTOS RTX</a> : Provides instructions for writing and debugging applications with CMSIS-RTOS RTX.</li>
 <li><a class="el" href="_function_overview.html">Function Overview</a> : Describes the RTX functions that are defined by the CMSIS-RTOS API.</li>
@@ -84,7 +84,9 @@ $(document).ready(function(){initNavTree('index.html','');});
 <th>Version </th><th>Description  </th></tr>
 <tr>
 <td>V4.74 </td><td>Corrected: <a class="el" href="group___c_m_s_i_s___r_t_o_s___kernel_ctrl.html#ga53d078a801022e202e8115c083ece68e">osKernelInitialize</a> and <a class="el" href="group___c_m_s_i_s___r_t_o_s___kernel_ctrl.html#gaab668ffd2ea76bb0a77ab0ab385eaef2">osKernelStart</a> when called from main which is already a thread.<br/>
-  </td><td>V4.73 </td><td>Corrected: mutex priority inversion when thread owns more than one mutex.<br/>
+   </td></tr>
+<tr>
+<td>V4.73 </td><td>Corrected: mutex priority inversion when thread owns more than one mutex.<br/>
  Added: RTX extensions os_suspend and os_resume.<br/>
  Added: RTX os_error template.   </td></tr>
 <tr>
@@ -115,7 +117,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 20 2014 15:16:35 for CMSIS-RTOS RTX by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Jun 12 2014 15:53:45 for CMSIS-RTOS RTX by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.2 
