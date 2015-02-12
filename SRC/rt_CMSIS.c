@@ -3,7 +3,7 @@
  *----------------------------------------------------------------------------
  *      Name:    rt_CMSIS.c
  *      Purpose: CMSIS RTOS API
- *      Rev.:    V4.73
+ *      Rev.:    V4.74
  *----------------------------------------------------------------------------
  *
  * Copyright (c) 1999-2009 KEIL, 2009-2013 ARM Germany GmbH
@@ -516,6 +516,7 @@ osStatus svcKernelInitialize (void) {
   sysThreadError(osOK);
 
   os_initialized = 1;
+  os_running = 0;
 
   return osOK;
 }
@@ -525,9 +526,14 @@ osStatus svcKernelStart (void) {
 
   if (os_running) return osOK;
 
-  rt_tsk_prio(0, 0);                            // Lowest priority
-  __set_PSP(os_tsk.run->tsk_stack + 8*4);       // New context
-  os_tsk.run = NULL;                            // Force context switch
+  rt_tsk_prio(0, os_tsk.run->prio_base);        // Restore priority
+  if (os_tsk.run->task_id == 0xFF) {            // Idle Thread
+    __set_PSP(os_tsk.run->tsk_stack + 8*4);     // Setup PSP
+  }
+  if (os_tsk.new == NULL) {                     // Force context switch
+    os_tsk.new = os_tsk.run;
+    os_tsk.run = NULL;
+  }
 
   rt_sys_start();
 
@@ -572,7 +578,7 @@ osStatus osKernelInitialize (void) {
 /// Start the RTOS Kernel
 osStatus osKernelStart (void) {
   uint32_t stack[8];
-  
+
   if (__get_IPSR() != 0) return osErrorISR;     // Not allowed in ISR
   switch (__get_CONTROL() & 0x03) {
     case 0x00:                                  // Privileged Thread mode & MSP

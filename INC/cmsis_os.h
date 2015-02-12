@@ -134,10 +134,10 @@ used throughout the whole project.
 #define osCMSIS           0x10002      ///< API version (main [31:16] .sub [15:0])
 
 /// \note CAN BE CHANGED: \b osCMSIS_KERNEL identifies the underlying RTOS kernel and version number.
-#define osCMSIS_RTX     ((4<<16)|73)   ///< RTOS identification and version (main [31:16] .sub [15:0])
+#define osCMSIS_RTX     ((4<<16)|74)   ///< RTOS identification and version (main [31:16] .sub [15:0])
 
 /// \note MUST REMAIN UNCHANGED: \b osKernelSystemId shall be consistent in every CMSIS-RTOS.
-#define osKernelSystemId "RTX V4.73"   ///< RTOS identification string
+#define osKernelSystemId "RTX V4.74"   ///< RTOS identification string
 
 
 /// \note MUST REMAIN UNCHANGED: \b osFeature_xxx shall be consistent in every CMSIS-RTOS.
