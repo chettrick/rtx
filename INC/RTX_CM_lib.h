@@ -3,10 +3,10 @@
  *----------------------------------------------------------------------------
  *      Name:    RTX_CM_LIB.H
  *      Purpose: RTX Kernel System Configuration
- *      Rev.:    V4.75
+ *      Rev.:    V4.77
  *----------------------------------------------------------------------------
  *
- * Copyright (c) 1999-2009 KEIL, 2009-2013 ARM Germany GmbH
+ * Copyright (c) 1999-2009 KEIL, 2009-2015 ARM Germany GmbH
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -102,8 +102,12 @@ OS_RESULT _os_mut_wait    (uint32_t p, OS_ID mutex, uint16_t timeout) __svc_indi
 #define OS_STACK_SZ (4*(OS_PRIVSTKSIZE+OS_MAINSTKSIZE))
 #endif
 
+#ifndef OS_STKINIT
+#define OS_STKINIT  0
+#endif
+
 uint16_t const os_maxtaskrun = OS_TASK_CNT;
-uint32_t const os_stackinfo  = (OS_STKCHECK<<24)| (OS_PRIV_CNT<<16) | (OS_STKSIZE*4);
+uint32_t const os_stackinfo  = (OS_STKINIT<<28) | (OS_STKCHECK<<24) | (OS_PRIV_CNT<<16) | (OS_STKSIZE*4);
 uint32_t const os_rrobin     = (OS_ROBIN << 16) | OS_ROBINTOUT;
 uint32_t const os_tickfreq   = OS_CLOCK;
 uint16_t const os_tickus_i   = OS_CLOCK/1000000;
@@ -261,19 +265,15 @@ void _main_init (void) {
   for (;;);
 }
 #else
-__asm void __rt_entry (void) {
+__asm void _platform_post_lib_init (void) {
 
-  IMPORT  __user_setup_stackheap
-  IMPORT  __rt_lib_init
   IMPORT  os_thread_def_main
   IMPORT  osKernelInitialize
   IMPORT  osKernelStart
   IMPORT  osThreadCreate
   IMPORT  exit
 
-  BL      __user_setup_stackheap
-  MOV     R1,R2
-  BL      __rt_lib_init
+  ADD     SP,#0x10
   BL      osKernelInitialize
   LDR     R0,=os_thread_def_main
   MOVS    R1,#0

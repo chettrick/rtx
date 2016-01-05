@@ -3,10 +3,10 @@
  *----------------------------------------------------------------------------
  *      Name:    RT_HAL_CM.H
  *      Purpose: Hardware Abstraction Layer for Cortex-M definitions
- *      Rev.:    V4.70
+ *      Rev.:    V4.77
  *----------------------------------------------------------------------------
  *
- * Copyright (c) 1999-2009 KEIL, 2009-2013 ARM Germany GmbH
+ * Copyright (c) 1999-2009 KEIL, 2009-2015 ARM Germany GmbH
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -37,6 +37,7 @@
 #define DEMCR_TRCENA    0x01000000
 #define ITM_ITMENA      0x00000001
 #define MAGIC_WORD      0xE25A2EA5
+#define MAGIC_PATTERN   0xCCCCCCCC
 
 #if defined (__CC_ARM)          /* ARM Compiler */
 

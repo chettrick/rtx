@@ -68,7 +68,8 @@ typedef struct OS_TCB {
   U8     prio_base;               /* Base priority                           */
 
   /* Hardware dependant part: specific for CM processor                      */
-  U8     stack_frame;             /* Stack frame: 0=Basic, 1=Extended        */
+  U8     stack_frame;             /* Stack frame: 0=Basic, 1=Extended,       */
+                                  /* (2=VFP/D16 stacked, 4=NEON/D32 stacked) */
   U16    priv_stack;              /* Private stack size, 0= system assigned  */
   U32    tsk_stack;               /* Current task Stack pointer (R13)        */
   U32    *stack;                  /* Pointer to Task Stack memory block      */

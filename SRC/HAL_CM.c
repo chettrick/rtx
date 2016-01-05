@@ -3,7 +3,7 @@
  *----------------------------------------------------------------------------
  *      Name:    HAL_CM.C
  *      Purpose: Hardware Abstraction Layer for Cortex-M
- *      Rev.:    V4.70
+ *      Rev.:    V4.77
  *----------------------------------------------------------------------------
  *
  * Copyright (c) 1999-2009 KEIL, 2009-2013 ARM Germany GmbH
@@ -89,6 +89,20 @@ void rt_init_stack (P_TCB p_TCB, FUNCP task_body) {
 
   /* Task entry point. */
   p_TCB->ptask = task_body;
+
+  /* Initialize stack with magic pattern. */
+  if (os_stackinfo & 0x10000000U) {
+    if (size > (16+1)) {
+      for (i = (size - 16)/2 - 1; i; i--) {
+        stk -= 2;
+        stk[1] = MAGIC_PATTERN;
+        stk[0] = MAGIC_PATTERN;
+      }
+      if (--stk > p_TCB->stack) {
+        *stk = MAGIC_PATTERN;
+      }
+    }
+  }
 
   /* Set a magic word for checking of stack overflow. */
   p_TCB->stack[0] = MAGIC_WORD;

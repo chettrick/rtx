@@ -3,10 +3,10 @@
  *----------------------------------------------------------------------------
  *      Name:    rt_CMSIS.c
  *      Purpose: CMSIS RTOS API
- *      Rev.:    V4.75
+ *      Rev.:    V4.78
  *----------------------------------------------------------------------------
  *
- * Copyright (c) 1999-2009 KEIL, 2009-2013 ARM Germany GmbH
+ * Copyright (c) 1999-2009 KEIL, 2009-2015 ARM Germany GmbH
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -81,6 +81,12 @@
 
 #define __NO_RETURN __declspec(noreturn)
 
+#define osEvent_type       osEvent
+#define osEvent_ret_status ret
+#define osEvent_ret_value  ret
+#define osEvent_ret_msg    ret
+#define osEvent_ret_mail   ret
+
 #define osCallback_type    osCallback
 #define osCallback_ret     ret
 
@@ -140,6 +146,9 @@ static __inline   t __##f (t1 a1, t2 a2, t3 a3, t4 a4) {                       \
 
 #define __NO_RETURN __attribute__((noreturn))
 
+typedef uint32_t __attribute__((vector_size(8)))  ret64;
+typedef uint32_t __attribute__((vector_size(16))) ret128;
+
 #define RET_pointer    __r0
 #define RET_int32_t    __r0
 #define RET_uint32_t   __r0
@@ -148,8 +157,14 @@ static __inline   t __##f (t1 a1, t2 a2, t3 a3, t4 a4) {                       \
 #define RET_osEvent    {(osStatus)__r0, {(uint32_t)__r1}, {(void *)__r2}}
 #define RET_osCallback {(void *)__r0, (void *)__r1}
 
-#define osCallback_type    uint64_t
-#define osCallback_ret     ((uint64_t)(uint32_t)ret.fp | ((uint64_t)((uint32_t)ret.arg)) << 32)
+#define osEvent_type       __attribute__((pcs("aapcs"))) ret128
+#define osEvent_ret_status (ret128){ret.status}
+#define osEvent_ret_value  (ret128){ret.status, ret.value.v}
+#define osEvent_ret_msg    (ret128){ret.status, ret.value.v, (uint32_t)ret.def.message_id}
+#define osEvent_ret_mail   (ret128){ret.status, ret.value.v, (uint32_t)ret.def.mail_id}
+
+#define osCallback_type    __attribute__((pcs("aapcs"))) ret64
+#define osCallback_ret     (ret64) {(uint32_t)ret.fp, (uint32_t)ret.arg}
 
 #define SVC_ArgN(n) \
   register int __r##n __asm("r"#n);
@@ -258,49 +273,8 @@ static inline  t __##f (t1 a1, t2 a2, t3 a3, t4 a4) {                          \
 }
 
 #define SVC_1_2 SVC_1_1 
-
-#define SVC_1_3(f,t,t1,rv)                                                     \
-t    f    (t1 a1);                                                             \
-__attribute__((naked))                                                         \
-void f##_ (t1 a1) {                                                            \
-  __asm volatile                                                               \
-  (                                                                            \
-    "push {lr}\n"                                                              \
-    "sub  sp,#12\n"                                                            \
-    "mov  r1,r0\n"                                                             \
-    "mov  r0,sp\n"                                                             \
-    "bl   "#f"\n"                                                              \
-    "pop  {r0-r2,pc}\n"                                                        \
-  );                                                                           \
-}                                                                              \
-__attribute__((always_inline))                                                 \
-static inline  t __##f (t1 a1) {                                               \
-  SVC_Arg1(t1);                                                                \
-  SVC_Call(f##_);                                                              \
-  return (t) rv;                                                               \
-}
-
-#define SVC_2_3(f,t,t1,t2,rv)                                                  \
-t    f    (t1 a1, t2 a2);                                                      \
-__attribute__((naked))                                                         \
-void f##_ (t1 a1, t2 a2) {                                                     \
-  __asm volatile                                                               \
-  (                                                                            \
-    "push {lr}\n"                                                              \
-    "sub  sp,#12\n"                                                            \
-    "mov  r2,r1\n"                                                             \
-    "mov  r1,r0\n"                                                             \
-    "mov  r0,sp\n"                                                             \
-    "bl   "#f"\n"                                                              \
-    "pop  {r0-r2,pc}\n"                                                        \
-  );                                                                           \
-}                                                                              \
-__attribute__((always_inline))                                                 \
-static inline  t __##f (t1 a1, t2 a2) {                                        \
-  SVC_Arg2(t1,t2);                                                             \
-  SVC_Call(f##_);                                                              \
-  return (t) rv;                                                               \
-}
+#define SVC_1_3 SVC_1_1 
+#define SVC_2_3 SVC_2_1 
 
 #elif defined (__ICCARM__)      /* IAR Compiler */
 
@@ -308,6 +282,12 @@ static inline  t __##f (t1 a1, t2 a2) {                                        \
 
 #define RET_osEvent        "=r"(ret.status), "=r"(ret.value), "=r"(ret.def)
 #define RET_osCallback     "=r"(ret.fp), "=r"(ret.arg)
+
+#define osEvent_type       osEvent
+#define osEvent_ret_status ret
+#define osEvent_ret_value  ret
+#define osEvent_ret_msg    ret
+#define osEvent_ret_mail   ret
 
 #define osCallback_type    uint64_t
 #define osCallback_ret     ((uint64_t)ret.fp | ((uint64_t)ret.arg)<<32)
@@ -853,19 +833,19 @@ osStatus svcDelay (uint32_t millisec) {
 
 /// Wait for Signal, Message, Mail, or Timeout
 #if osFeature_Wait != 0
-os_InRegs osEvent svcWait (uint32_t millisec) {
+os_InRegs osEvent_type svcWait (uint32_t millisec) {
   osEvent ret;
 
   if (millisec == 0) {
     ret.status = osOK;
-    return ret;
+    return osEvent_ret_status;
   }
 
   /* To Do: osEventSignal, osEventMessage, osEventMail */
   rt_dly_wait(rt_ms2tick(millisec));
   ret.status = osEventTimeout;
 
-  return ret;
+  return osEvent_ret_status;
 }
 #endif
 
@@ -909,8 +889,8 @@ typedef struct os_timer_cb_ {                   // Timer Control Block
   uint8_t             state;                    // Timer State
   uint8_t              type;                    // Timer Type (Periodic/One-shot)
   uint16_t         reserved;                    // Reserved
-  uint16_t             tcnt;                    // Timer Delay Count
-  uint16_t             icnt;                    // Timer Initial Count 
+  uint32_t             tcnt;                    // Timer Delay Count
+  uint32_t             icnt;                    // Timer Initial Count 
   void                 *arg;                    // Timer Function Argument
   const osTimerDef_t *timer;                    // Pointer to Timer definition
 } os_timer_cb;
@@ -934,7 +914,7 @@ static void rt_timer_insert (os_timer_cb *pt, uint32_t tcnt) {
     p = p->next;
   }
   pt->next = p;
-  pt->tcnt = (uint16_t)tcnt;
+  pt->tcnt = tcnt;
   if (p != NULL) {
     p->tcnt -= pt->tcnt;
   }
@@ -1026,8 +1006,9 @@ osStatus svcTimerStart (osTimerId timer_id, uint32_t millisec) {
   pt = rt_id2obj(timer_id);
   if (pt == NULL) return osErrorParameter;
 
-  tcnt = rt_ms2tick(millisec);
-  if (tcnt == 0) return osErrorValue;
+  if (millisec == 0) return osErrorValue;
+
+  tcnt = (uint32_t)(((1000 * (uint64_t)millisec) + os_clockrate - 1)  / os_clockrate);
 
   switch (pt->state) {
     case osTimerRunning:
@@ -1037,7 +1018,7 @@ osStatus svcTimerStart (osTimerId timer_id, uint32_t millisec) {
       break;
     case osTimerStopped:
       pt->state = osTimerRunning;
-      pt->icnt  = (uint16_t)tcnt;
+      pt->icnt  = tcnt;
       break;
     default:
       return osErrorResource;
@@ -1106,11 +1087,12 @@ os_InRegs osCallback_type svcTimerCall (osTimerId timer_id) {
   return osCallback_ret;
 }
 
-static __INLINE osStatus isrMessagePut (osMessageQId queue_id, uint32_t info, uint32_t millisec);
+osStatus isrMessagePut (osMessageQId queue_id, uint32_t info, uint32_t millisec);
 
 /// Timer Tick (called each SysTick)
 void sysTimerTick (void) {
   os_timer_cb *pt, *p;
+  osStatus     status;
 
   p = os_timer_head;
   if (p == NULL) return;
@@ -1120,7 +1102,10 @@ void sysTimerTick (void) {
     pt = p;
     p = p->next;
     os_timer_head = p;
-    isrMessagePut(osMessageQId_osTimerMessageQ, (uint32_t)pt, 0);
+    status = isrMessagePut(osMessageQId_osTimerMessageQ, (uint32_t)pt, 0);
+    if (status != osOK) {
+      os_error(OS_ERR_TIMER_OVF);
+    }
     if (pt->type == osTimerPeriodic) {
       rt_timer_insert(pt, pt->icnt);
     } else {
@@ -1135,7 +1120,7 @@ uint32_t sysUserTimerWakeupTime (void) {
   if (os_timer_head) {
     return os_timer_head->tcnt;
   }
-  return 0xFFFF;
+  return 0xFFFFFFFF;
 }
 
 /// Update user timers on resume
@@ -1253,13 +1238,13 @@ int32_t svcSignalClear (osThreadId thread_id, int32_t signals) {
 }
 
 /// Wait for one or more Signal Flags to become signaled for the current RUNNING thread
-os_InRegs osEvent svcSignalWait (int32_t signals, uint32_t millisec) {
+os_InRegs osEvent_type svcSignalWait (int32_t signals, uint32_t millisec) {
   OS_RESULT res;
   osEvent   ret;
 
   if (signals & (0xFFFFFFFF << osFeature_Signals)) {
     ret.status = osErrorValue;
-    return ret;
+    return osEvent_ret_status;
   }
 
   if (signals != 0) {                           // Wait for all specified signals
@@ -1276,14 +1261,14 @@ os_InRegs osEvent svcSignalWait (int32_t signals, uint32_t millisec) {
     ret.value.signals = 0;
   }
 
-  return ret;
+  return osEvent_ret_value;
 }
 
 
 // Signal ISR Calls
 
 /// Set the specified Signal Flags of an active thread
-static __INLINE int32_t isrSignalSet (osThreadId thread_id, int32_t signals) {
+int32_t isrSignalSet (osThreadId thread_id, int32_t signals) {
   P_TCB   ptcb;
   int32_t sig;
 
@@ -1538,7 +1523,7 @@ osStatus svcSemaphoreDelete (osSemaphoreId semaphore_id) {
 // Semaphore ISR Calls
 
 /// Release a Semaphore
-static __INLINE osStatus isrSemaphoreRelease (osSemaphoreId semaphore_id) {
+osStatus isrSemaphoreRelease (osSemaphoreId semaphore_id) {
   OS_ID sem;
 
   sem = rt_id2obj(semaphore_id);
@@ -1746,37 +1731,37 @@ osStatus svcMessagePut (osMessageQId queue_id, uint32_t info, uint32_t millisec)
 }
 
 /// Get a Message or Wait for a Message from a Queue
-os_InRegs osEvent svcMessageGet (osMessageQId queue_id, uint32_t millisec) {
+os_InRegs osEvent_type svcMessageGet (osMessageQId queue_id, uint32_t millisec) {
   OS_RESULT res;
   osEvent   ret;
 
   if (queue_id == NULL) {
     ret.status = osErrorParameter;
-    return ret;
+    return osEvent_ret_status;
   }
 
   if (((P_MCB)queue_id)->cb_type != MCB) {
     ret.status = osErrorParameter;
-    return ret;
+    return osEvent_ret_status;
   }
 
   res = rt_mbx_wait(queue_id, &ret.value.p, rt_ms2tick(millisec));
   
   if (res == OS_R_TMO) {
     ret.status = millisec ? osEventTimeout : osOK;
-    return ret;
+    return osEvent_ret_value;
   }
 
   ret.status = osEventMessage;
 
-  return ret;
+  return osEvent_ret_value;
 }
 
 
 // Message Queue ISR Calls
 
 /// Put a Message to a Queue
-static __INLINE osStatus isrMessagePut (osMessageQId queue_id, uint32_t info, uint32_t millisec) {
+osStatus isrMessagePut (osMessageQId queue_id, uint32_t info, uint32_t millisec) {
 
   if ((queue_id == NULL) || (millisec != 0)) {
     return osErrorParameter;
@@ -1794,7 +1779,7 @@ static __INLINE osStatus isrMessagePut (osMessageQId queue_id, uint32_t info, ui
 }
 
 /// Get a Message or Wait for a Message from a Queue
-static __INLINE os_InRegs osEvent isrMessageGet (osMessageQId queue_id, uint32_t millisec) {
+os_InRegs osEvent isrMessageGet (osMessageQId queue_id, uint32_t millisec) {
   OS_RESULT res;
   osEvent   ret;
 

@@ -40,7 +40,7 @@ void Init_Timers (void) {
   // Create one-shoot timer
   exec1 = 1;
   id1 = osTimerCreate (osTimer(Timer1), osTimerOnce, &exec1);
-  if (id1 != NULL)  {     // One-shoot timer created
+  if (id1 != NULL)  {     // One-shot timer created
     // start timer with delay 100ms
 		status = osTimerStart (id1, 100);            
     if (status != osOK)  {

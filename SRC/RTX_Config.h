@@ -3,10 +3,10 @@
  *----------------------------------------------------------------------------
  *      Name:    RTX_CONFIG.H
  *      Purpose: Exported functions of RTX_Config.c
- *      Rev.:    V4.70
+ *      Rev.:    V4.78
  *----------------------------------------------------------------------------
  *
- * Copyright (c) 1999-2009 KEIL, 2009-2013 ARM Germany GmbH
+ * Copyright (c) 1999-2009 KEIL, 2009-2015 ARM Germany GmbH
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -37,6 +37,7 @@
 #define OS_ERR_STK_OVF          1
 #define OS_ERR_FIFO_OVF         2
 #define OS_ERR_MBX_OVF          3
+#define OS_ERR_TIMER_OVF        4
 
 /* Definitions */
 #define BOX_ALIGN_8                   0x80000000
